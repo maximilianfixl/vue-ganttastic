@@ -6,21 +6,26 @@
       class="g-grid-line"
       :style="{
         width,
-        background: highlightedUnits?.includes(Number(value)) ? colors.hoverHighlight : undefined
+        background: Number(value) === 10 ? colors.hoverHighlight : ''
       }"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue"
 import provideConfig from "../provider/provideConfig.js"
 import useTimeaxisUnits from "../composables/useTimeaxisUnits.js"
 
-defineProps<{
+const props = defineProps<{
   highlightedUnits?: number[]
 }>()
 
+const chu = computed(() => props.highlightedUnits || [])
+console.log("this is highlightedUnits:", props.highlightedUnits)
+
 const { colors } = provideConfig()
+console.log("this is colors.hoverHighlight:", colors.value.hoverHighlight)
 const { timeaxisUnits } = useTimeaxisUnits()
 </script>
 
@@ -28,7 +33,7 @@ const { timeaxisUnits } = useTimeaxisUnits()
 .g-grid-container {
   position: absolute;
   top: 0;
-  left: 0%;
+  left: 0;
   width: 100%;
   height: 100%;
   display: flex;

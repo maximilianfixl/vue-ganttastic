@@ -5,6 +5,7 @@
     precision="week"
     :row-height="40"
     grid
+    :highlighted-units="[1, 3, 5]"
     current-time
     width="100%"
     bar-start="beginDate"

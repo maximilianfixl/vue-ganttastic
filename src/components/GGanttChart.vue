@@ -3,6 +3,7 @@
     <div :class="[{ 'labels-in-column': !!labelColumnTitle }]">
       <g-gantt-label-column
         v-if="labelColumnTitle"
+        :class="[labelColumnSticky ? 'label-column-sticky' : '']"
         :style="{
           width: labelColumnWidth
         }"
@@ -19,7 +20,7 @@
         :class="['g-gantt-chart', { 'with-column': labelColumnTitle }]"
         :style="{ width, background: colors.background, fontFamily: font }"
       >
-        <g-gantt-timeaxis v-if="!hideTimeaxis">
+        <g-gantt-timeaxis v-if="!hideTimeaxis" :class="[timeaxisSticky ? 'timeaxis-sticky' : '']">
           <template #upper-timeunit="{ label, value, date }">
             <!-- expose upper-timeunit slot of g-gantt-timeaxis-->
             <slot name="upper-timeunit" :label="label" :value="value" :date="date" />
@@ -91,6 +92,7 @@ export interface GGanttChartProps {
   dateFormat?: string | false
   width?: string
   hideTimeaxis?: boolean
+  timeaxisSticky?: boolean
   colorScheme?: ColorSchemeKey | ColorScheme
   grid?: boolean
   pushOnOverlap?: boolean
@@ -100,6 +102,7 @@ export interface GGanttChartProps {
   font?: string
   labelColumnTitle?: string
   labelColumnWidth?: string
+  labelColumnSticky?: boolean
 }
 
 export type GGanttChartConfig = ToRefs<Required<GGanttChartProps>> & {
@@ -280,6 +283,18 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
   border-bottom-left-radius: 0px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+
+.label-column-sticky {
+  position: sticky;
+  left: 0;
+  z-index: 11;
+}
+
+.timeaxis-sticky {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10;
 }
 
 .g-gantt-rows-container {
