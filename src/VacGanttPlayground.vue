@@ -2,8 +2,6 @@
 import { computed, ref } from "vue"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
-import GGanttChart from "./components/GGanttChart.vue"
-import GGanttRow from "./components/GGanttRow.vue"
 import type { GanttBarObject } from "./types"
 import weekday from "dayjs/plugin/weekday"
 
@@ -31,12 +29,13 @@ const generateRows = (rowCount: number) => {
       if (endDateTime > maxDate) break
 
       bars.push({
-        beginDate: beginDateTime.format("yyyy-LL-dd HH:mm"),
-        endDate: endDateTime.format("yyyy-LL-dd HH:mm"),
+        beginDate: beginDateTime.format("YYYY-MM-DD HH:mm"),
+        endDate: endDateTime.format("YYYY-MM-DD HH:mm"),
         ganttBarConfig: {
           id: `${i}-${bars.length}-${Date.now()}`,
           hasHandles: true,
           label: "Maximilian",
+          html: "<i>Fixl</i>",
           style: {
             background: "#" + Math.floor(Math.random() * 16777215).toString(16),
             borderRadius: "20px",
@@ -78,11 +77,12 @@ console.log("this is ganttRows fixture: ", ganttRows.value)
 </script>
 
 <template>
-  <div id="vertical-scroll-wrapper">
+  <div id="scroll-wrapper">
     <g-gantt-chart
       label-column-sticky
       timeaxis-sticky
       :chart-end="chartEnd"
+      current-time-label="Current time label"
       :chart-start="chartStart"
       :color-scheme="dark ? 'dark' : 'default'"
       :current-time="currentTime"
@@ -119,10 +119,14 @@ console.log("this is ganttRows fixture: ", ganttRows.value)
 </template>
 
 <style>
-#vertical-scroll-wrapper {
+html {
+  overflow: hidden;
+}
+
+#scroll-wrapper {
   width: 100%;
   max-height: 300px;
   display: flex;
-  overflow-x: scroll;
+  overflow: scroll;
 }
 </style>

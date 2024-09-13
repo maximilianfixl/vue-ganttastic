@@ -44,7 +44,7 @@ const xDist = computed(() => {
 }
 
 .g-grid-current-time-marker {
-  width: 0px;
+  width: 0;
   height: calc(100% - 2px);
   display: flex;
 }

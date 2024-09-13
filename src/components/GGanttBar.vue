@@ -23,7 +23,7 @@
         <div>
           {{ barConfig.label || "" }}
         </div>
-        <div v-if="barConfig.html" v-html="barConfig.html"/>
+        <div v-if="barConfig.html" v-html="barConfig.html" />
       </slot>
     </div>
     <template v-if="barConfig.hasHandles">

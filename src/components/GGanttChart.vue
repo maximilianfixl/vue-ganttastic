@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div :class="[{ 'labels-in-column': !!labelColumnTitle }]">
+    <div style="border: 3px red solid" :class="[{ 'labels-in-column': !!labelColumnTitle }]">
       <g-gantt-label-column
         v-if="labelColumnTitle"
-        :class="[labelColumnSticky ? 'label-column-sticky' : '']"
+        style="border: 3px yellow solid"
+        :class="[{ 'label-column-sticky': !!labelColumnSticky }]"
         :style="{
           width: labelColumnWidth
         }"
@@ -18,9 +19,14 @@
       <div
         ref="ganttChart"
         :class="['g-gantt-chart', { 'with-column': labelColumnTitle }]"
-        :style="{ width, background: colors.background, fontFamily: font }"
+        :style="{
+          width,
+          background: colors.background,
+          fontFamily: font,
+          border: '3px blue solid'
+        }"
       >
-        <g-gantt-timeaxis v-if="!hideTimeaxis" :class="[timeaxisSticky ? 'timeaxis-sticky' : '']">
+        <g-gantt-timeaxis v-if="!hideTimeaxis" style="border: 3px green solid">
           <template #upper-timeunit="{ label, value, date }">
             <!-- expose upper-timeunit slot of g-gantt-timeaxis-->
             <slot name="upper-timeunit" :label="label" :value="value" :date="date" />
@@ -30,7 +36,11 @@
             <slot name="timeunit" :label="label" :value="value" :date="date" />
           </template>
         </g-gantt-timeaxis>
-        <g-gantt-grid v-if="grid" :highlighted-units="highlightedUnits" />
+        <g-gantt-grid
+          v-if="grid"
+          style="border: 3px deeppink solid"
+          :highlighted-units="highlightedUnits"
+        />
         <g-gantt-current-time v-if="currentTime">
           <template #current-time-label>
             <slot name="current-time-label" />
