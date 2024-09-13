@@ -39,6 +39,7 @@ const getChartRows = provideGetChartRows()
   color: rgb(64, 64, 64);
   font-variant-numeric: tabular-nums;
   font-size: 0.9em;
+  border: greenyellow 1px solid;
 }
 
 .g-label-column-header {
@@ -49,7 +50,6 @@ const getChartRows = provideGetChartRows()
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top-left-radius: 5px;
 }
 
 .g-label-column-rows {
@@ -57,7 +57,6 @@ const getChartRows = provideGetChartRows()
   height: 100%;
   display: flex;
   flex-direction: column;
-  border-bottom-left-radius: 5px;
 }
 
 .g-label-column-row {

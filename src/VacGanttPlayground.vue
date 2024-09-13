@@ -77,56 +77,47 @@ console.log("this is ganttRows fixture: ", ganttRows.value)
 </script>
 
 <template>
-  <div id="scroll-wrapper">
-    <g-gantt-chart
-      label-column-sticky
-      timeaxis-sticky
-      :chart-end="chartEnd"
-      current-time-label="Current time label"
-      :chart-start="chartStart"
-      :color-scheme="dark ? 'dark' : 'default'"
-      :current-time="currentTime"
-      :grid="grid"
-      :hide-timeaxis="hideTimeAxis"
-      :highlight-current-time="true"
-      :highlighted-units="[0, 1, 6, 7, 13, 14]"
-      :row-height="35"
-      bar-end="endDate"
-      bar-start="beginDate"
-      label-column-title="Unit"
-      label-column-width="75px"
-      precision="day"
-    >
-      <template #upper-timeunit="{ date: upperDate }">
-        <div>
-          <span>{{ dayjs(upperDate).format("MMMM YYYY") }}</span>
-        </div>
-      </template>
-      <template #timeunit="{ date: unitDate }">
-        <div style="width: 35px; text-align: center">
-          <span>{{ unitDate.getDate() }}</span>
-        </div>
-      </template>
-      <g-gantt-row
-        v-for="(row, rowIndex) in ganttRows"
-        :key="`row-${rowIndex}`"
-        :bars="row.bars"
-        :label="row.title"
-        highlight-on-hover
-      />
-    </g-gantt-chart>
-  </div>
+  <g-gantt-chart
+    label-column-sticky
+    timeaxis-sticky
+    :chart-end="chartEnd"
+    current-time-label="Current time label"
+    :chart-start="chartStart"
+    :color-scheme="dark ? 'dark' : 'default'"
+    :current-time="currentTime"
+    :grid="grid"
+    :hide-timeaxis="hideTimeAxis"
+    :highlight-current-time="true"
+    :highlighted-units="[0, 1, 6, 7, 13, 14]"
+    :row-height="35"
+    bar-end="endDate"
+    bar-start="beginDate"
+    label-column-title="Unit"
+    label-column-width="75px"
+    precision="day"
+  >
+    <template #upper-timeunit="{ date: upperDate }">
+      <div>
+        <span>{{ dayjs(upperDate).format("MMMM YYYY") }}</span>
+      </div>
+    </template>
+    <template #timeunit="{ date: unitDate }">
+      <div style="width: 35px; text-align: center">
+        <span>{{ unitDate.getDate() }}</span>
+      </div>
+    </template>
+    <g-gantt-row
+      v-for="(row, rowIndex) in ganttRows"
+      :key="`row-${rowIndex}`"
+      :bars="row.bars"
+      :label="row.title"
+      highlight-on-hover
+    />
+  </g-gantt-chart>
 </template>
 
 <style>
 html {
   overflow: hidden;
-}
-
-#scroll-wrapper {
-  width: 100%;
-  max-height: 300px;
-  display: flex;
-  overflow: scroll;
 }
 </style>

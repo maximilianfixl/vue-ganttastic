@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <div style="border: 3px red solid" :class="[{ 'labels-in-column': !!labelColumnTitle }]">
+  <div class="gantt-chart-wrapper">
+    <div :class="[{ 'labels-in-column': !!labelColumnTitle }]">
       <g-gantt-label-column
         v-if="labelColumnTitle"
-        style="border: 3px yellow solid"
         :class="[{ 'label-column-sticky': !!labelColumnSticky }]"
         :style="{
           width: labelColumnWidth
@@ -16,17 +15,9 @@
           <slot name="label-column-row" :label="label" />
         </template>
       </g-gantt-label-column>
-      <div
-        ref="ganttChart"
-        :class="['g-gantt-chart', { 'with-column': labelColumnTitle }]"
-        :style="{
-          width,
-          background: colors.background,
-          fontFamily: font,
-          border: '3px blue solid'
-        }"
-      >
-        <g-gantt-timeaxis v-if="!hideTimeaxis" style="border: 3px green solid">
+
+      <div class="scroll-wrapper">
+        <g-gantt-timeaxis v-if="!hideTimeaxis">
           <template #upper-timeunit="{ label, value, date }">
             <!-- expose upper-timeunit slot of g-gantt-timeaxis-->
             <slot name="upper-timeunit" :label="label" :value="value" :date="date" />
@@ -36,19 +27,26 @@
             <slot name="timeunit" :label="label" :value="value" :date="date" />
           </template>
         </g-gantt-timeaxis>
-        <g-gantt-grid
-          v-if="grid"
-          style="border: 3px deeppink solid"
-          :highlighted-units="highlightedUnits"
-        />
-        <g-gantt-current-time v-if="currentTime">
-          <template #current-time-label>
-            <slot name="current-time-label" />
-          </template>
-        </g-gantt-current-time>
-        <div class="g-gantt-rows-container">
-          <slot />
-          <!-- the g-gantt-row components go here -->
+
+        <div
+          ref="ganttChart"
+          :class="['g-gantt-chart', { 'with-column': labelColumnTitle }]"
+          :style="{
+            width,
+            background: colors.background,
+            fontFamily: font
+          }"
+        >
+          <g-gantt-grid v-if="grid" :highlighted-units="highlightedUnits" />
+          <g-gantt-current-time v-if="currentTime">
+            <template #current-time-label>
+              <slot name="current-time-label" />
+            </template>
+          </g-gantt-current-time>
+          <div class="g-gantt-rows-container">
+            <slot />
+            <!-- the g-gantt-row components go here -->
+          </div>
         </div>
       </div>
     </div>
@@ -277,6 +275,20 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
 </script>
 
 <style>
+.gantt-chart-wrapper {
+  max-height: 200px;
+  overflow: scroll;
+  width: 100%;
+  border: 3px solid red;
+  display: flex;
+  flex-direction: row;
+  z-index: 999999;
+}
+
+.scroll-wrapper {
+  border: deeppink 1px solid;
+}
+
 .g-gantt-chart {
   position: relative;
   display: flex;
@@ -285,14 +297,6 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
   -webkit-touch-callout: none;
   user-select: none;
   font-variant-numeric: tabular-nums;
-  border-radius: 5px;
-}
-
-.with-column {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
 }
 
 .label-column-sticky {
